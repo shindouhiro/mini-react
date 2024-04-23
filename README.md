@@ -102,3 +102,10 @@ yarn dev
   - child
   - sibling
   - 叔叔
+
+## 第四章 fiber
+## 第五章 function component
++ 使用requestIdleCallback 会出现
+浏览器没有空闲时间，渲染的Dom就会卡顿渲染
+  1. 处理完链表统一添加
+  2. 找到根节点
