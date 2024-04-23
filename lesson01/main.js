@@ -3,25 +3,33 @@
  * props
  * children
 */
-const textEl = {
-  type: 'TEXT_ELEMENT',
-  props: {
-    nodeValue: 'app',
-    children: []
+
+
+function createTextNode(text) {
+  return {
+    type: 'TEXT_ELEMENT',
+    props: {
+      nodeValue: text,
+      children: []
+    }
   }
 }
 
-const el = {
-  type: 'div',
-  props: {
-    id: '#app',
-    children: [textEl]
+function createElement(type, props, ...children) {
+  return {
+    type,
+    props: {
+      ...props,
+      children
+    }
   }
 }
 
 
 
 const container = document.getElementById('root')
+const textEl = createTextNode("app")
+const el = createElement("div", { id: 'app' }, textEl)
 const elNode = document.createElement(el.type)
 elNode.id = el.props.id
 const textNode = document.createTextNode('')
