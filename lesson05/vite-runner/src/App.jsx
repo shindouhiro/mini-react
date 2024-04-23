@@ -1,17 +1,16 @@
 import React from '../core/React.js'
-function Counter() {
-  return <CounterContainer />
+function Counter({ num }) {
+  return <div>{num}</div>
 }
 
-function CounterContainer() {
-  return <div>Container</div>
-}
 
 function App() {
   return (
     <div id="app">
       Hello, MiniReact
-      <Counter />
+      <Counter num={10} />
+      <Counter num={20} />
+      <Counter num={30} />
     </div>
   )
 }

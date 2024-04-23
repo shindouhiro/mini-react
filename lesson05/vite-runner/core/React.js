@@ -14,7 +14,10 @@ function createElement(type, props, ...children) {
     type,
     props: {
       ...props,
-      children: children.map(child => typeof child === 'string' ? createTextNode(child) : child)
+      children: children.map(child => {
+        const isTextNode = typeof child === 'string' || typeof child === 'number'
+        return isTextNode ? createTextNode(child) : child
+      })
     }
   }
 }
@@ -116,16 +119,20 @@ function preformWorkUnit(fiber) {
     }
     // 3. 转换链表设值好指针
   }
-  const children = isFunctionComponent ? [fiber.type()] : fiber.props.children
+  const children = isFunctionComponent ? [fiber.type(fiber.props)] : fiber.props.children
   initChildren(fiber, children)
   // 返回下一个要执行的任务
   if (fiber.child) {
     return fiber.child
   }
-  if (fiber.sibling) {
-    return fiber.sibling
+
+  //while
+  let nextFiber = fiber
+  while (nextFiber) {
+    if (nextFiber.sibling) return nextFiber.sibling
+    nextFiber = nextFiber.parent
   }
-  return fiber.parent?.sibling
+  // return fiber.parent?.sibling
 }
 
 requestIdleCallback(workLoop)
