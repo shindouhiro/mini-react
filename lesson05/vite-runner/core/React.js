@@ -56,12 +56,19 @@ function commitRoot() {
 
 function commitWork(fiber) {
   if (!fiber) return
-  fiber.parent.dom.append(fiber.dom)
+  let fiberParent = fiber.parent
+  while (!fiberParent.dom) {
+    fiberParent = fiberParent.parent
+  }
+  if (fiber.dom) {
+    fiberParent.dom.append(fiber.dom)
+  }
   commitWork(fiber.child)
   commitWork(fiber.sibling)
 }
 
 function createDom(type) {
+  console.log({ type })
   return type !== 'TEXT_ELEMENT' ? document.createElement(type) : document.createTextNode("")
 }
 
@@ -73,9 +80,9 @@ function updateProps(dom, props) {
   })
 }
 
-function initChildren(work) {
+function initChildren(work, children) {
   let preChild = null
-  const children = work.props.children
+  // const children = work.props.children
   children.forEach((child, index) => {
     const newWork = {
       type: child.type,
@@ -94,27 +101,31 @@ function initChildren(work) {
   })
 }
 
-function preformWorkUnit(work) {
+function preformWorkUnit(fiber) {
   console.log(2)
-  if (!work.dom) {
-    // 1. 创建dom
-    const dom = (work.dom = createDom(work.type))
-    // work.parent.dom.append(dom)
+  const isFunctionComponent = typeof fiber.type === 'function'
+  if (!isFunctionComponent) {
+    if (!fiber.dom) {
+      // 1. 创建dom
+      const dom = (fiber.dom = createDom(fiber.type))
+      // work.parent.dom.append(dom)
 
-    // 2. 处理props
-    updateProps(dom, work.props)
+      // 2. 处理props
+      updateProps(dom, fiber.props)
 
+    }
+    // 3. 转换链表设值好指针
   }
-  // 3. 转换链表设值好指针
-  initChildren(work)
+  const children = isFunctionComponent ? [fiber.type()] : fiber.props.children
+  initChildren(fiber, children)
   // 返回下一个要执行的任务
-  if (work.child) {
-    return work.child
+  if (fiber.child) {
+    return fiber.child
   }
-  if (work.sibling) {
-    return work.sibling
+  if (fiber.sibling) {
+    return fiber.sibling
   }
-  return work.parent?.sibling
+  return fiber.parent?.sibling
 }
 
 requestIdleCallback(workLoop)
