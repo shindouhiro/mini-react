@@ -1,9 +1,3 @@
-/*
- * type
- * props
- * children
-*/
-
 
 function createTextNode(text) {
   return {
@@ -39,17 +33,9 @@ function render(App, container) {
   container.append(el)
 }
 
-
-const ReactDom = {
-  createRoot(container) {
-    return {
-      render(App) {
-        render(App, container)
-      }
-    }
-
-  }
+const React = {
+  createElement,
+  render
 }
-const container = document.getElementById('root')
-const App = createElement("div", { id: 'app' }, "hello, ", "mini React")
-ReactDom.createRoot(container).render(App)
+
+export default React
