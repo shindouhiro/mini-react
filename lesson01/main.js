@@ -26,7 +26,7 @@ function createElement(type, props, ...children) {
 }
 
 function render(App, container) {
-  const { type, props, props: { children } } = App
+  const { type, props, props: { children = [] } } = App
   const el = type !== 'TEXT_ELEMENT' ? document.createElement(type) : document.createTextNode("")
   Object.keys(props).forEach(key => {
     if (key !== "children") {
@@ -40,8 +40,16 @@ function render(App, container) {
 }
 
 
+const ReactDom = {
+  createRoot(container) {
+    return {
+      render(App) {
+        render(App, container)
+      }
+    }
 
+  }
+}
 const container = document.getElementById('root')
-const textEl = createTextNode("app")
 const App = createElement("div", { id: 'app' }, "hello, ", "mini React")
-render(App, container)
+ReactDom.createRoot(container).render(App)
