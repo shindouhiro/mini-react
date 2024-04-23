@@ -92,3 +92,7 @@ yarn dev
 ## 第三章 任务调度
 + JS单线程，但数据量过大，会阻塞
 
+
+### 解决渲染阻塞问题
++ 拆分任务
++ requestidlecallback
