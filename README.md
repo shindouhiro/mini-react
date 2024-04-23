@@ -25,3 +25,26 @@ textNode.nodeValue = 'app'
 textNode.append(elNode)
 container.append(elNode)
 ```
+
+### 创建虚拟DOM树
++ props
++ type
++ children
+
+```js
+const el = {
+  type: 'div',
+  props: {
+    id: 'app',
+    children: [
+      {
+        type: 'TEXT_ELEMENT',
+        props: {
+          nodeValue: 'app',
+          children: []
+        }
+      }
+    ]
+  },
+}
+```
