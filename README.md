@@ -78,3 +78,13 @@ const el = {
 
 ## 第二章 JSX
 
+#### 使用vite
+```bash
+yarn create vite 
+Vanilla
+JavsScript
+cd viterunner
+yarn 
+yarn dev
+```
+
