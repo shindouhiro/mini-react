@@ -48,3 +48,25 @@ const el = {
   },
 }
 ```
+
+#### 拆分一个textEl
+
+```js
+const textEl = {
+        type: 'TEXT_ELEMENT',
+        props: {
+          nodeValue: 'app',
+          children: []
+        }
+}
+const el = {
+  type: 'div',
+  props: {
+    id: 'app',
+    children: [
+       textEl
+    ]
+  },
+}
+
+```
