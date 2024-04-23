@@ -18,7 +18,7 @@ root.render(
 + 创建文本节点,文本节点内容为app
 ```js
 const container = documnet.getElementById('root');
-const elNode = document.createElemnt('div');
+const elNode = document.crkeateElemnt('div');
 elNode.id = 'app'
 const textNode = document.createTextNode('')
 textNode.nodeValue = 'app'
@@ -49,7 +49,7 @@ const el = {
 }
 ```
 
-#### 拆分一个textEl
+#### 拆分一个textEl 
 
 ```js
 const textEl = {
@@ -70,3 +70,11 @@ const el = {
 }
 
 ```
+
+```js
+
+```
+
+
+## 第二章 JSX
+
