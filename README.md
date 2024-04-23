@@ -96,3 +96,9 @@ yarn dev
 ### 解决渲染阻塞问题
 + 拆分任务
 + requestidlecallback
+
+#### 控制树的渲染
++ 树转链表
+  - child
+  - sibling
+  - 叔叔
