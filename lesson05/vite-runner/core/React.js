@@ -104,23 +104,33 @@ function initChildren(work, children) {
   })
 }
 
+function updateFunctionComponent(fiber) {
+  const children = [fiber.type(fiber.props)]
+  initChildren(fiber, children)
+}
+
+function updateHostComponent(fiber) {
+  if (!fiber.dom) {
+    // 1. 创建dom
+    const dom = (fiber.dom = createDom(fiber.type))
+    // work.parent.dom.append(dom)
+
+    // 2. 处理props
+    updateProps(dom, fiber.props)
+
+  }
+  const children = fiber.props.children
+  initChildren(fiber, children)
+}
+
 function preformWorkUnit(fiber) {
   console.log(2)
   const isFunctionComponent = typeof fiber.type === 'function'
-  if (!isFunctionComponent) {
-    if (!fiber.dom) {
-      // 1. 创建dom
-      const dom = (fiber.dom = createDom(fiber.type))
-      // work.parent.dom.append(dom)
-
-      // 2. 处理props
-      updateProps(dom, fiber.props)
-
-    }
-    // 3. 转换链表设值好指针
+  if (isFunctionComponent) {
+    updateFunctionComponent(fiber)
+  } else {
+    updateHostComponent(fiber)
   }
-  const children = isFunctionComponent ? [fiber.type(fiber.props)] : fiber.props.children
-  initChildren(fiber, children)
   // 返回下一个要执行的任务
   if (fiber.child) {
     return fiber.child
